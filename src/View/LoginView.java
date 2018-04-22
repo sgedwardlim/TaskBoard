@@ -1,7 +1,11 @@
 package View;
 
 import javax.swing.*;
+
+import javafx.event.ActionEvent;
+
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class LoginView extends JPanel {
     private JPanel containerPanel;
@@ -36,6 +40,7 @@ public class LoginView extends JPanel {
 
     private void configureTitleLabelLayout() {
         titleLabel = new JLabel("Task Board Login");
+        titleLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
         add(titleLabel);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, titleLabel, 0, SpringLayout.HORIZONTAL_CENTER, this);
     }
@@ -72,6 +77,10 @@ public class LoginView extends JPanel {
 
     private void configureLoginButtonLayout() {
         loginButton = new JButton("Login");
+        
+        ListenForLogInButton lForButton = new ListenForLogInButton();
+        loginButton.addActionListener(lForButton);
+        
         loginButton.setMaximumSize(new Dimension(100,20));
         add(loginButton);
         layout.putConstraint(SpringLayout.NORTH, loginButton, 0, SpringLayout.SOUTH, containerPanel);
@@ -85,5 +94,24 @@ public class LoginView extends JPanel {
         layout.putConstraint(SpringLayout.NORTH, errorLabel, 0, SpringLayout.SOUTH, loginButton);
         layout.putConstraint(SpringLayout.SOUTH, errorLabel, 0, SpringLayout.SOUTH, this);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 0, SpringLayout.HORIZONTAL_CENTER, loginButton);
+    }
+    
+    //test login action listener
+    private class ListenForLogInButton implements ActionListener{
+    	
+		@Override
+		public void actionPerformed(java.awt.event.ActionEvent e) {
+			if (e.getSource() == loginButton){
+    			String username = usernameField.getText();
+    			String password = passwordField.getText();
+    			
+    			if (username.contains("test") && password.contains("testpass")){
+    				usernameField.setText(null);
+    				passwordField.setText(null);
+    			}else{
+    				JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
+    			}
+    		}
+		}
     }
 }
