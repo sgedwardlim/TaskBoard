@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        //frame.setSize(1000, 700);
+        frame.setSize(1800, 1000);
         LoginView loginView = new LoginView();
         //frame.add(loginView);
         MainView mainView = new MainView();
@@ -20,9 +20,9 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("TaskBoard");
         
-        frame.pack();
+        //frame.pack();
         frame.setVisible(true);
-        frame.setResizable(true);
+        frame.setResizable(false);
         
     }
 }
