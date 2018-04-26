@@ -1,13 +1,16 @@
 package View;
 
 import javax.swing.*;
-
-import javafx.event.ActionEvent;
-
 import java.awt.*;
-import java.awt.event.ActionListener;
 
-public class LoginView extends JPanel {
+interface LoginViewInterface {
+    JButton getLoginButton();
+    JTextField getUsernameField();
+    JPasswordField getPasswordField();
+    JLabel getErrorLabel();
+}
+
+public class LoginView extends JPanel implements LoginViewInterface {
     private JPanel containerPanel;
     private JLabel titleLabel, usernameLabel, passwordLabel, errorLabel;
     private JTextField usernameField;
@@ -77,10 +80,6 @@ public class LoginView extends JPanel {
 
     private void configureLoginButtonLayout() {
         loginButton = new JButton("Login");
-        
-        ListenForLogInButton lForButton = new ListenForLogInButton();
-        loginButton.addActionListener(lForButton);
-        
         loginButton.setMaximumSize(new Dimension(100,20));
         add(loginButton);
         layout.putConstraint(SpringLayout.NORTH, loginButton, 0, SpringLayout.SOUTH, containerPanel);
@@ -90,28 +89,26 @@ public class LoginView extends JPanel {
     private void configureErrorLabelLayout() {
         errorLabel = new JLabel("Login incorrect. Please try again");
         errorLabel.setForeground(Color.red);
+        errorLabel.setVisible(false);
         add(errorLabel);
         layout.putConstraint(SpringLayout.NORTH, errorLabel, 0, SpringLayout.SOUTH, loginButton);
         layout.putConstraint(SpringLayout.SOUTH, errorLabel, 0, SpringLayout.SOUTH, this);
         layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 0, SpringLayout.HORIZONTAL_CENTER, loginButton);
     }
-    
-    //test login action listener
-    private class ListenForLogInButton implements ActionListener{
-    	
-		@Override
-		public void actionPerformed(java.awt.event.ActionEvent e) {
-			if (e.getSource() == loginButton){
-    			String username = usernameField.getText();
-    			String password = passwordField.getText();
-    			
-    			if (username.contains("test") && password.contains("testpass")){
-    				usernameField.setText(null);
-    				passwordField.setText(null);
-    			}else{
-    				JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
-    			}
-    		}
-		}
+
+    public JButton getLoginButton() {
+        return loginButton;
+    }
+
+    public JTextField getUsernameField() {
+        return usernameField;
+    }
+
+    public JPasswordField getPasswordField() {
+        return passwordField;
+    }
+
+    public JLabel getErrorLabel() {
+        return errorLabel;
     }
 }

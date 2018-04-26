@@ -5,8 +5,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import com.sun.prism.paint.Color;
-
 public class MainView extends JPanel{
 
 	private JLabel selectLabel;
@@ -28,8 +26,6 @@ public class MainView extends JPanel{
 		configureLogoutButtonLayout();
 		configureCreateButtonLayout();
 		configureLoadButtonLayout();
-	
-		
 	}
 	
 	private void configureLayout() {

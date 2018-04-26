@@ -1,7 +1,8 @@
+import Controller.LoginController;
 import View.LoginView;
 import View.MainView;
 
-import java.awt.BorderLayout;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -9,20 +10,12 @@ public class Main {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        frame.setSize(1800, 1000);
-        LoginView loginView = new LoginView();
-        //frame.add(loginView);
-        MainView mainView = new MainView();
-        frame.add(mainView);
- 
-
-        frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setTitle("TaskBoard");
-        
-        //frame.pack();
+        new LoginController(frame);
+        // set the jframe size and location, and make it visible
+        frame.setPreferredSize(new Dimension(400, 300));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setResizable(false);
-        
     }
 }
