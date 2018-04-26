@@ -17,7 +17,7 @@ public class LoginController {
 
         frame.add(loginView);
         frame.setTitle("TaskBoard");
-        
+
         loginView.getLoginButton().addActionListener(new LogInButtonListener());
     }
 
@@ -32,6 +32,7 @@ public class LoginController {
                     MainView mainView = new MainView();
                     frame.remove(loginView);
                     frame.add(mainView);
+                    frame.pack();
                 } else {
                     loginView.getErrorLabel().setVisible(true);
                 }
