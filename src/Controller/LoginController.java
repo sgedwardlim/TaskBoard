@@ -28,14 +28,18 @@ public class LoginController {
                 String username = loginView.getUsernameField().getText();
                 String password = loginView.getPasswordField().getText();
 
-                if (username.equals("admin") && password.equals("test")){
-                    MainView mainView = new MainView();
-                    frame.remove(loginView);
-                    frame.add(mainView);
-                    frame.pack();
-                } else {
-                    loginView.getErrorLabel().setVisible(true);
-                }
+                MainView mainView = new MainView();
+                frame.remove(loginView);
+                frame.add(mainView);
+                frame.pack();
+//                if (username.equals("admin") && password.equals("test")){
+//                    MainView mainView = new MainView();
+//                    frame.remove(loginView);
+//                    frame.add(mainView);
+//                    frame.pack();
+//                } else {
+//                    loginView.getErrorLabel().setVisible(true);
+//                }
             }
         }
     }
