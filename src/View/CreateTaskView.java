@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.*;
+import java.util.Properties;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -18,6 +19,8 @@ public class CreateTaskView extends JPanel{
 	private JTextField nameField, duedateField;
 	private JTextArea descArea;
 	
+	private JDatePickerImpl datePicker;
+	
 	private SpringLayout createTaskLayout;
 	
 	public CreateTaskView(){
@@ -29,10 +32,11 @@ public class CreateTaskView extends JPanel{
 		configureStatusLabelLayout();
 		configureStatusListLayout();
 		configureDueDateLabelLayout();
-		configureDueDateField();
+		//configureDueDateField();
+		configureDatePickerLayout();
 		configureCreateButtonLayout();
 		configureCancelButtonLayout();
-		
+			
 	}
 	
 	private void configureLayout() {
@@ -120,7 +124,7 @@ public class CreateTaskView extends JPanel{
 		createButton = new JButton("Create");
 		createButton.setFont(new Font("Calibri", Font.BOLD, 18));
 		createTaskLayout.putConstraint(SpringLayout.WEST, createButton, 20, SpringLayout.WEST, this);
-		createTaskLayout.putConstraint(SpringLayout.NORTH, createButton, 8, SpringLayout.SOUTH,  duedateField);
+		createTaskLayout.putConstraint(SpringLayout.NORTH, createButton, 10, SpringLayout.SOUTH,  datePicker);
 		add(createButton);
 	}
 	
@@ -128,8 +132,22 @@ public class CreateTaskView extends JPanel{
 		cancelButton = new JButton("Cancel");
 		cancelButton.setFont(new Font("Calibri", Font.BOLD, 18));
 		createTaskLayout.putConstraint(SpringLayout.WEST, cancelButton, 5, SpringLayout.EAST, createButton);
-		createTaskLayout.putConstraint(SpringLayout.NORTH, cancelButton, 8, SpringLayout.SOUTH,  duedateField);
+		createTaskLayout.putConstraint(SpringLayout.NORTH, cancelButton, 10, SpringLayout.SOUTH,  datePicker);
 		add(cancelButton);
+	}
+	
+	private void configureDatePickerLayout(){
+		UtilDateModel model = new UtilDateModel();
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+		datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		datePicker.setFont(new Font("Calibri", Font.BOLD, 18));
+		createTaskLayout.putConstraint(SpringLayout.WEST, datePicker, 20, SpringLayout.WEST, this);
+		createTaskLayout.putConstraint(SpringLayout.NORTH, datePicker, 3, SpringLayout.SOUTH,  duedateLabel);
+		add(datePicker);
 	}
 	
 }
