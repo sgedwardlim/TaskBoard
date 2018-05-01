@@ -1,5 +1,6 @@
 package Controller;
 
+import View.CreateTaskView;
 import View.LoginView;
 import View.MainView;
 
@@ -29,8 +30,20 @@ public class LoginController {
                 String password = loginView.getPasswordField().getText();
 
                 MainView mainView = new MainView();
-                frame.remove(loginView);
-                frame.add(mainView);
+                CreateTaskView createTaskView = new CreateTaskView();
+                
+                //changed log in to present the create task dialog window to test
+                JDialog jd = new JDialog();
+                jd.setLocationRelativeTo(null);
+                jd.setSize(500, 600);
+                jd.setTitle("Create new Task");
+                jd.add(createTaskView);
+                jd.setVisible(true);
+                jd.setResizable(false);
+
+                //frame.remove(loginView);
+                //frame.add(createTaskView);
+                
                 frame.pack();
 //                if (username.equals("admin") && password.equals("test")){
 //                    MainView mainView = new MainView();
