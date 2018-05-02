@@ -13,8 +13,6 @@ public class MainView extends JPanel{
 		createButton, logoutButton;
 	
     private SpringLayout mainLayout;
-   
-
 	
 	public MainView(){
 		configureLayout();
@@ -107,6 +105,8 @@ public class MainView extends JPanel{
 		 //button.setBackground(java.awt.Color.WHITE);
 		 button.setContentAreaFilled(false);
 	 }
-	
-	
+
+	public JButton getCreateButton() {
+		return createButton;
+	}
 }

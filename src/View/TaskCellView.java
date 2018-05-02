@@ -3,13 +3,7 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
-interface TaskCellViewInterface {
-    JLabel getTitleLabel();
-    JLabel getDescriptionLabel();
-    JLabel getDueDateLabel();
-}
-
-public class TaskCellView extends JPanel implements TaskCellViewInterface {
+public class TaskCellView extends JPanel {
     private JLabel titleLabel, descriptionLabel, dueLiteralLabel, dueDateLabel;
 
     private SpringLayout layout;

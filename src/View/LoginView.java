@@ -3,14 +3,7 @@ package View;
 import java.awt.*;
 import javax.swing.*;
 
-interface LoginViewInterface {
-    JButton getLoginButton();
-    JTextField getUsernameField();
-    JPasswordField getPasswordField();
-    JLabel getErrorLabel();
-}
-
-public class LoginView extends JPanel implements LoginViewInterface {
+public class LoginView extends JPanel {
     private JPanel containerPanel;
     private JLabel titleLabel, usernameLabel, passwordLabel, errorLabel;
     private JTextField usernameField;

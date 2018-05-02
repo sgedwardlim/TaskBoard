@@ -30,22 +30,8 @@ public class LoginController {
                 String username = loginView.getUsernameField().getText();
                 String password = loginView.getPasswordField().getText();
 
-                MainView mainView = new MainView();
-                CreateTaskView createTaskView = new CreateTaskView();
+//                CreateTaskView createTaskView = new CreateTaskView();
 
-                // temporary as well to show creation of new project upon login, should only show when user wants to create or edit project
-                ProjectView projectView = new ProjectView(frame);
-                JDialog projectViewDialog = new JDialog();
-                projectViewDialog.setLocationRelativeTo(null);
-                projectViewDialog.setSize(500, 600);
-                projectViewDialog.setTitle("Create New Project");
-                projectViewDialog.add(projectView);
-                projectViewDialog.setVisible(true);
-//                projectViewDialog.setResizable(false);
-
-                String[] columns = { "TODO", "DEV REVIEW", "DONE"};
-                projectView.updateColumns(columns);
-                
                 //changed log in to present the create task dialog window to test
 //                JDialog jd = new JDialog();
 //                jd.setLocationRelativeTo(null);
@@ -57,16 +43,17 @@ public class LoginController {
 
                 //frame.remove(loginView);
                 //frame.add(createTaskView);
-                
-                frame.pack();
+
+//                frame.pack();
+
+                // TODO: replace with commented line
+                if (username.equals("") && password.equals("")){
 //                if (username.equals("admin") && password.equals("test")){
-//                    MainView mainView = new MainView();
-//                    frame.remove(loginView);
-//                    frame.add(mainView);
-//                    frame.pack();
-//                } else {
-//                    loginView.getErrorLabel().setVisible(true);
-//                }
+                    frame.remove(loginView);
+                    new MainController(frame);
+                } else {
+                    loginView.getErrorLabel().setVisible(true);
+                }
             }
         }
     }

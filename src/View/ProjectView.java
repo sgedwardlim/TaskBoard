@@ -16,7 +16,7 @@ public class ProjectView extends JPanel {
 
     private JPanel columnEditableViewPanel;
 
-    public ProjectView(JFrame parent) {
+    public ProjectView() {
         configureLayout();
         configureNameLabelLayout();
         configureNameFieldLayout();
