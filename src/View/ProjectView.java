@@ -1,6 +1,7 @@
 package View;
 
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 public class ProjectView extends JPanel {
@@ -120,7 +121,6 @@ public class ProjectView extends JPanel {
         revalidate();
     }
 
-
     /// Public Methods
     public void updateColumns(String[] columns) {
         columnEditableViews.removeAll(columnEditableViews);
@@ -129,6 +129,26 @@ public class ProjectView extends JPanel {
             layout.getConstraints(columnEditableViewPanel).setHeight(Spring.constant(columnEditableViewHeight * columnEditableViews.size()));
         }
         revalidate();
+    }
+
+    public JTextField getNameField() {
+        return nameField;
+    }
+
+    public String[] getColumns() {
+        String[] columns = new String[columnEditableViews.size()];
+        for (int i = 0; i < columnEditableViews.size(); i++) {
+            columns[i] = columnEditableViews.get(i).nameField.getText();
+        }
+        return columns;
+    }
+
+    public JButton getCreateButton() {
+        return createButton;
+    }
+
+    public JButton getCancelButton() {
+        return cancelButton;
     }
 
     // Helper class that encapsulates a "ColumnEditableView"

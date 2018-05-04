@@ -10,13 +10,14 @@ package Model;
 //        You will need a TaskModelComparator or implement a comparable to compare tasks by due date.
 //        Additionally you may want to implement a TaskModelListener and make the ProjectModel, implement TaskModelListener.
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TaskModel {
     private String name = "Task1";
     private String description;
     private Date dueDate;
-    // need a datatype that encapsulates dynamic types of "columns"
+    private ArrayList<String> status = new ArrayList();
 
     public String getName() {
         return name;
@@ -40,5 +41,13 @@ public class TaskModel {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public ArrayList<String> getStatus() {
+        return status;
+    }
+
+    public void setStatus(ArrayList<String> status) {
+        this.status = status;
     }
 }
