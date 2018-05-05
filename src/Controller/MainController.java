@@ -8,12 +8,13 @@ import javax.swing.*;
 
 public class MainController {
     private JFrame frame;
+    private MainView mainView;
 
     public MainController(JFrame frame) {
         this.frame = frame;
 
         frame.setLocationRelativeTo(null);
-        MainView mainView = new MainView();
+        mainView = new MainView();
         frame.add(mainView);
         frame.pack();
 
@@ -48,6 +49,7 @@ public class MainController {
             // save the name
             projectModel.setName(projectView.getNameField().getText());
             // save the columns
+            mainView.updateProjectsList(projectView.getNameField().getText());
             for (String column: projectView.getColumns()) {
                 projectModel.addColumn(column);
             }

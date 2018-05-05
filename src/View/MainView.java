@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -8,12 +9,12 @@ import javax.swing.event.*;
 public class MainView extends JPanel{
 
 	private JLabel selectLabel;
-	private JComboBox projectList;
+	private JComboBox projectComboBox;
 	private JButton editButton, saveButton, deleteButton, loadButton,
 		createButton, logoutButton;
 	
     private SpringLayout mainLayout;
-	
+    
 	public MainView(){
 		configureLayout();
 		configureSelectLabelLayout();
@@ -42,19 +43,18 @@ public class MainView extends JPanel{
 	 
 	 private void configureProjectListLayout(){
 		 //test combo box list
-		 String[] projects = {"Project 1", "Project 2", "Project 3"};
-		 projectList = new JComboBox(projects);
-		 projectList.setFont(new Font("Calibri", Font.BOLD, 18));
-		 mainLayout.putConstraint(SpringLayout.WEST, projectList, 15, SpringLayout.EAST, selectLabel);
-		 mainLayout.putConstraint(SpringLayout.NORTH, projectList, 18, SpringLayout.NORTH, this);
-		 add(projectList);
+		 projectComboBox = new JComboBox();
+		 projectComboBox.setFont(new Font("Calibri", Font.BOLD, 18));
+		 mainLayout.putConstraint(SpringLayout.WEST, projectComboBox, 15, SpringLayout.EAST, selectLabel);
+		 mainLayout.putConstraint(SpringLayout.NORTH, projectComboBox, 18, SpringLayout.NORTH, this);
+		 add(projectComboBox);
 	 }
 	 
 	 
 	 private void configureEditButtonLayout(){
 		 editButton = new JButton("Edit");
 		 configureButtonStyle(editButton);
-		 mainLayout.putConstraint(SpringLayout.WEST, editButton, 20, SpringLayout.EAST,  projectList);
+		 mainLayout.putConstraint(SpringLayout.WEST, editButton, 20, SpringLayout.EAST,  projectComboBox);
 	     mainLayout.putConstraint(SpringLayout.NORTH, editButton, 18, SpringLayout.NORTH,  this);
 		 add(editButton);
 	 }
@@ -108,5 +108,9 @@ public class MainView extends JPanel{
 
 	public JButton getCreateButton() {
 		return createButton;
+	}
+	
+	public void updateProjectsList(String project){
+		projectComboBox.addItem(project);
 	}
 }

@@ -11,7 +11,7 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-public class CreateTaskView extends JPanel{
+public class TaskView extends JPanel{
 	
 	private JLabel nameLabel, descLabel, statusLabel, duedateLabel;
 	private JComboBox statusList;
@@ -23,7 +23,7 @@ public class CreateTaskView extends JPanel{
 	
 	private SpringLayout createTaskLayout;
 	
-	public CreateTaskView(){
+	public TaskView(){
 		configureLayout();
 		configureNameLabelLayout();
 		configureNameField();
