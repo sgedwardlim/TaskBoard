@@ -1,6 +1,6 @@
 package Controller;
 
-import View.TaskView;
+import View.ManageTaskView;
 import View.LoginView;
 import View.MainView;
 import View.ProjectView;

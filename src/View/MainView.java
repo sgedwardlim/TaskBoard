@@ -2,9 +2,13 @@ package View;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import Model.Column;
+import Model.ProjectModel;
 
 public class MainView extends JPanel{
 
@@ -15,7 +19,10 @@ public class MainView extends JPanel{
 	
     private SpringLayout mainLayout;
     
+    private JPanel columnsPanel;
+    
 	public MainView(){
+		
 		configureLayout();
 		configureSelectLabelLayout();
 		configureProjectListLayout();
@@ -25,6 +32,7 @@ public class MainView extends JPanel{
 		configureLogoutButtonLayout();
 		configureCreateButtonLayout();
 		configureLoadButtonLayout();
+		configureColumnsPanelLayout();
 	}
 	
 	private void configureLayout() {
@@ -40,6 +48,7 @@ public class MainView extends JPanel{
 	     mainLayout.putConstraint(SpringLayout.NORTH, selectLabel, 20, SpringLayout.NORTH,  this);
 	     add(selectLabel);
 	 }
+	
 	 
 	 private void configureProjectListLayout(){
 		 //test combo box list
@@ -99,10 +108,23 @@ public class MainView extends JPanel{
 		 add(logoutButton);
 	 }
 	 
+	 private void configureColumnsPanelLayout(){
+		 columnsPanel = new JPanel();
+		 columnsPanel.setLayout(new FlowLayout());
+		 columnsPanel.setOpaque(true);
+		 columnsPanel.setBackground(Color.lightGray);
+		  
+	     mainLayout.putConstraint(SpringLayout.NORTH, columnsPanel, 10, SpringLayout.SOUTH, editButton);
+	     mainLayout.putConstraint(SpringLayout.WEST, columnsPanel, 20, SpringLayout.WEST, this);
+	     mainLayout.putConstraint(SpringLayout.EAST, columnsPanel, -20, SpringLayout.EAST, this);
+	     mainLayout.putConstraint(SpringLayout.SOUTH, columnsPanel, -10, SpringLayout.SOUTH, this);
+
+	     add(columnsPanel);
+	 }
+	 
 	 private void configureButtonStyle(JButton button){
 		 
 		 button.setFont(new Font("Calibri", Font.BOLD, 18));
-		 //button.setBackground(java.awt.Color.WHITE);
 		 button.setContentAreaFilled(false);
 	 }
 
@@ -112,5 +134,16 @@ public class MainView extends JPanel{
 	
 	public void updateProjectsList(String project){
 		projectComboBox.addItem(project);
+	}
+	
+	public void addColumns(){
+	
+		List<Column> columnList = ProjectModel.getColumns();
+		
+		for(int i = 0; i < columnList.size(); i++){
+			ColumnCellView cell = new ColumnCellView(columnList.get(i).getName());
+			columnsPanel.add(cell);
+		}
+		
 	}
 }

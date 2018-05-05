@@ -4,7 +4,7 @@ import java.util.*;
 
 public class ProjectModel {
     private String name = "Project1";
-    private List<Column> columns = new ArrayList<>();
+    private static List<Column> columns = new ArrayList<>();
     private List<TaskModel> tasks = new LinkedList<>();
 
     /// Adds a new column to the existing list of columns while maintaining the list order
@@ -31,7 +31,7 @@ public class ProjectModel {
         this.name = name;
     }
 
-    public List<Column> getColumns() {
+    public static List<Column> getColumns() {
         return columns;
     }
 

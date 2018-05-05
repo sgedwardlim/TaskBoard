@@ -48,11 +48,17 @@ public class MainController {
         projectView.getCreateButton().addActionListener((event) -> {
             // save the name
             projectModel.setName(projectView.getNameField().getText());
-            // save the columns
+            
+            //updates project combo box
             mainView.updateProjectsList(projectView.getNameField().getText());
+            
+            // save the columns
             for (String column: projectView.getColumns()) {
                 projectModel.addColumn(column);
             }
+            
+            mainView.addColumns();
+            
             projectViewDialog.dispose();
         });
 
