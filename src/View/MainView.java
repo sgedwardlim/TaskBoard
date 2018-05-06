@@ -110,7 +110,7 @@ public class MainView extends JPanel{
 	 
 	 private void configureColumnsPanelLayout(){
 		 columnsPanel = new JPanel();
-		 columnsPanel.setLayout(new FlowLayout());
+		 columnsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		 columnsPanel.setOpaque(true);
 		 columnsPanel.setBackground(Color.lightGray);
 		  

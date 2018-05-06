@@ -11,6 +11,11 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import java.util.List;
+
+import Model.Column;
+import Model.ProjectModel;
+
 public class ManageTaskView extends JPanel{
 	
 	private JLabel nameLabel, descLabel, statusLabel, duedateLabel;
@@ -93,8 +98,9 @@ public class ManageTaskView extends JPanel{
 	
 	private void configureStatusListLayout(){
 		//tests combo box list
-		String[] statuses = {"To Do", "In Progress", "Completed"};
-		statusList = new JComboBox(statuses);
+		
+		statusList = new JComboBox();
+		updateStatusList();
 		statusList.setFont(new Font("Calibri", Font.BOLD, 18));
 		createTaskLayout.putConstraint(SpringLayout.WEST, statusList, 20, SpringLayout.WEST, this);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, statusList, 3, SpringLayout.SOUTH,  statusLabel);
@@ -148,6 +154,14 @@ public class ManageTaskView extends JPanel{
 		createTaskLayout.putConstraint(SpringLayout.WEST, datePicker, 20, SpringLayout.WEST, this);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, datePicker, 3, SpringLayout.SOUTH,  duedateLabel);
 		add(datePicker);
+	}
+	
+	public void updateStatusList(){
+		statusList.removeAllItems();
+		List<Column> columnList = ProjectModel.getColumns();
+		for (Column column : columnList){
+			statusList.addItem(column.getName());
+		}
 	}
 	
 }
