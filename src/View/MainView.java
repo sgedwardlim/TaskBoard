@@ -135,7 +135,11 @@ public class MainView extends JPanel{
 	public void updateProjectsList(String project){
 		projectComboBox.addItem(project);
 	}
-	
+
+	public JComboBox getProjectComboBox() {
+		return projectComboBox;
+	}
+
 	public void addColumns(){
 	
 		List<Column> columnList = ProjectModel.getColumns();

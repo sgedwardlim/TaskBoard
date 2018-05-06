@@ -10,10 +10,11 @@ package Model;
 //        You will need a TaskModelComparator or implement a comparable to compare tasks by due date.
 //        Additionally you may want to implement a TaskModelListener and make the ProjectModel, implement TaskModelListener.
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TaskModel {
+public class TaskModel implements Serializable {
     private String name = "Task1";
     private String description;
     private Date dueDate;

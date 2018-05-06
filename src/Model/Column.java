@@ -1,7 +1,9 @@
 package Model;
 
+import java.io.Serializable;
+
 /// A wrapper that encapsulates the name of a column
-public class Column {
+public class Column implements Serializable {
     private String name;
 
     Column(String name) {

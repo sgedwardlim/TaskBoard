@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ProjectModel {
+public class ProjectModel implements Serializable {
     private String name = "Project1";
     private static List<Column> columns = new ArrayList<>();
     private List<TaskModel> tasks = new LinkedList<>();

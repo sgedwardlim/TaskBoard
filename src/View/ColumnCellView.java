@@ -7,8 +7,6 @@ import java.awt.Font;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import com.sun.xml.internal.ws.org.objectweb.asm.Label;
-
 public class ColumnCellView extends JPanel{
 	private JLabel titleLabel;
 	private JButton addTaskButton;
