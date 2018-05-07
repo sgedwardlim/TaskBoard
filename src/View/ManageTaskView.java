@@ -100,7 +100,7 @@ public class ManageTaskView extends JPanel{
 		//tests combo box list
 		
 		statusList = new JComboBox();
-		updateStatusList();
+//		updateStatusList();
 		statusList.setFont(new Font("Calibri", Font.BOLD, 18));
 		createTaskLayout.putConstraint(SpringLayout.WEST, statusList, 20, SpringLayout.WEST, this);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, statusList, 3, SpringLayout.SOUTH,  statusLabel);
@@ -156,9 +156,8 @@ public class ManageTaskView extends JPanel{
 		add(datePicker);
 	}
 	
-	public void updateStatusList(){
+	public void updateStatusList(List<Column> columnList){
 		statusList.removeAllItems();
-		List<Column> columnList = ProjectModel.getColumns();
 		for (Column column : columnList){
 			statusList.addItem(column.getName());
 		}

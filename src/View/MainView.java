@@ -140,14 +140,10 @@ public class MainView extends JPanel{
 		return projectComboBox;
 	}
 
-	public void addColumns(){
-	
-		List<Column> columnList = ProjectModel.getColumns();
-		
-		for(int i = 0; i < columnList.size(); i++){
-			ColumnCellView cell = new ColumnCellView(columnList.get(i).getName());
+	public void addColumns(ArrayList<Column> columns){
+		for(int i = 0; i < columns.size(); i++){
+			ColumnCellView cell = new ColumnCellView(columns.get(i).getName());
 			columnsPanel.add(cell);
 		}
-		
 	}
 }

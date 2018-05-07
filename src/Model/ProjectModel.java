@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ProjectModel implements Serializable {
     private String name = "Project1";
-    private static List<Column> columns = new ArrayList<>();
+    private ArrayList<Column> columns = new ArrayList<>();
     private List<TaskModel> tasks = new LinkedList<>();
 
     /// Adds a new column to the existing list of columns while maintaining the list order
@@ -32,7 +32,7 @@ public class ProjectModel implements Serializable {
         this.name = name;
     }
 
-    public static List<Column> getColumns() {
+    public ArrayList<Column> getColumns() {
         return columns;
     }
 

@@ -29,7 +29,7 @@ public class MainController {
             taskBoardModel = (TaskBoardModel) in.readObject();
             in.close();
             file.close();
-        }  catch(IOException ex) {
+        } catch(IOException ex) {
             System.out.println("IOException is caught");
             // create a new task model
             taskBoardModel = new TaskBoardModel();
@@ -43,7 +43,10 @@ public class MainController {
         for (ProjectModel projectModel: taskBoardModel.getProjects()) {
             mainView.updateProjectsList(projectModel.getName());
         }
-        mainView.addColumns();
+        // always show the first
+        if (taskBoardModel.getProjects().size() != 0) {
+            mainView.addColumns(taskBoardModel.getProjects().get(0).getColumns());
+        }
 
         // setup listeners
         mainView.getCreateButton().addActionListener((e) -> {
@@ -90,7 +93,7 @@ public class MainController {
             }
 
             mainView.updateProjectsList(projectView.getNameField().getText());
-            mainView.addColumns();
+            mainView.addColumns(projectModel.getColumns());
             projectViewDialog.dispose();
         });
 
