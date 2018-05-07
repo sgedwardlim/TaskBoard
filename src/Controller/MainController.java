@@ -49,12 +49,27 @@ public class MainController {
         }
 
         // setup listeners
+        mainView.getEditButton().addActionListener((e) -> {
+            // figure out the selected project and edit
+            int index = mainView.getProjectComboBox().getSelectedIndex();
+            ProjectModel model = taskBoardModel.getProjects().get(index);
+            setupProjectView(model);
+        });
+
         mainView.getCreateButton().addActionListener((e) -> {
-            setupProjectView();
+            setupProjectView(null);
+        });
+
+        mainView.getLogoutButton().addActionListener((e) -> {
+            frame.remove(mainView);
+            new LoginController(frame);
+            frame.pack();
         });
     }
 
-    private void setupProjectView() {
+    private void setupProjectView(ProjectModel model) {
+        boolean editable = model != null;
+
         // setup the project view
         ProjectView projectView = new ProjectView();
         JDialog projectViewDialog = new JDialog();
@@ -64,8 +79,8 @@ public class MainController {
         projectViewDialog.add(projectView);
         projectViewDialog.setVisible(true);
 
-        // read from our model to populate the view with the right values
-        ProjectModel projectModel = new ProjectModel();
+        // read from our model to populate the view with the right values, if model is null, then create new model
+        ProjectModel projectModel =  editable ? model : new ProjectModel();
         projectView.getNameField().setText(projectModel.getName());
         projectModel.addColumn("TODO");
         String[] columns = new String[projectModel.getColumns().size()];
@@ -75,12 +90,14 @@ public class MainController {
         projectView.updateColumns(columns);
 
         // setup button listeners
-        projectView.getCreateButton().addActionListener((event) -> {
+        projectView.getSaveButton().addActionListener((event) -> {
             projectModel.setName(projectView.getNameField().getText());
             for (String column: projectView.getColumns()) {
                 projectModel.addColumn(column);
             }
-            taskBoardModel.addProject(projectModel);
+            if (!editable) {
+                taskBoardModel.addProject(projectModel);
+            }
 
             // save new project model into task board
             try {
