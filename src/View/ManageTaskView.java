@@ -1,16 +1,21 @@
 package View;
 
 import java.awt.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.swing.*;
 import javax.swing.event.*;
 
+import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Model.Column;
@@ -28,7 +33,7 @@ public class ManageTaskView extends JPanel{
 	
 	private SpringLayout createTaskLayout;
 	
-	public ManageTaskView(){
+	public ManageTaskView(ArrayList<Column> columns){
 		configureLayout();
 		configureNameLabelLayout();
 		configureNameField();
@@ -36,6 +41,7 @@ public class ManageTaskView extends JPanel{
 		configureDescAreaLayout();
 		configureStatusLabelLayout();
 		configureStatusListLayout();
+		updateStatusList(columns);
 		configureDueDateLabelLayout();
 		//configureDueDateField();
 		configureDatePickerLayout();
@@ -156,11 +162,45 @@ public class ManageTaskView extends JPanel{
 		add(datePicker);
 	}
 	
+	public JButton getCreateButton(){
+		return createButton;
+	}
+	
+	public JButton getCancelButton(){
+		return cancelButton;
+	}
+	
+	public JTextField getNameField(){
+		return nameField;
+	}
+	
+	public JTextArea getDescArea(){
+		return descArea;
+	}
+	
+	public JComboBox getStatusList(){
+		return statusList;
+	}
+	
+	public Date getDueDate() throws ParseException{
+		String sDate =  datePicker.getJFormattedTextField().getText();
+		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+		return date;
+	}
+	
 	public void updateStatusList(List<Column> columnList){
 		statusList.removeAllItems();
 		for (Column column : columnList){
 			statusList.addItem(column.getName());
 		}
+	}
+	
+	public void setSelectedItem(String name){
+		statusList.setSelectedItem(name);
+	}
+	
+	public Object getSelectedItem(){
+		return statusList.getSelectedItem();
 	}
 	
 }

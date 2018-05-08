@@ -1,6 +1,6 @@
 package Model;
 
-//Name: String, “Task1” by default
+//Name: String, â€œTask1â€� by default
 //Description: String, empty by default
 //Due Date: Date/String, empty by default
 //Status: String, the first column of that project by default (For ex TODO)*
@@ -19,6 +19,8 @@ public class TaskModel implements Serializable {
     private String description;
     private Date dueDate;
     private ArrayList<String> status = new ArrayList();
+    
+    private String currentStatus;
 
     public String getName() {
         return name;
@@ -50,5 +52,9 @@ public class TaskModel implements Serializable {
 
     public void setStatus(ArrayList<String> status) {
         this.status = status;
+    }
+    
+    public void setCurrentStatus(String status){
+    	this.currentStatus = status;
     }
 }

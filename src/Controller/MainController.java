@@ -91,9 +91,12 @@ public class MainController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+           
+            /**************************/
             mainView.updateProjectsList(projectView.getNameField().getText());
             mainView.addColumns(projectModel.getColumns());
+            /**************************/
+            
             projectViewDialog.dispose();
         });
 

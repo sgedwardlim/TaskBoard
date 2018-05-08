@@ -141,8 +141,9 @@ public class MainView extends JPanel{
 	}
 
 	public void addColumns(ArrayList<Column> columns){
+		
 		for(int i = 0; i < columns.size(); i++){
-			ColumnCellView cell = new ColumnCellView(columns.get(i).getName());
+			ColumnCellView cell = new ColumnCellView(columns.get(i).getName(), columns);
 			columnsPanel.add(cell);
 		}
 	}
