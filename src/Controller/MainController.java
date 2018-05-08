@@ -56,6 +56,17 @@ public class MainController {
             setupProjectView(model);
         });
 
+        mainView.getDeleteButton().addActionListener((e) -> {
+            // delete the current existing project,
+            int index = mainView.getProjectComboBox().getSelectedIndex();
+            if (index != -1) {
+                ProjectModel model = taskBoardModel.getProjects().get(index);
+                taskBoardModel.deleteProject(model);
+                mainView.getProjectComboBox().removeItemAt(index);
+            }
+            serializeTaskBoardModel();
+        });
+
         mainView.getCreateButton().addActionListener((e) -> {
             setupProjectView(null);
         });
@@ -99,15 +110,7 @@ public class MainController {
                 taskBoardModel.addProject(projectModel);
             }
 
-            // save new project model into task board
-            try {
-                FileOutputStream fos = new FileOutputStream(TaskBoardModel.filename);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(taskBoardModel);
-                oos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            serializeTaskBoardModel();
 
             mainView.updateProjectsList(projectView.getNameField().getText());
             mainView.addColumns(projectModel.getColumns());
@@ -117,5 +120,17 @@ public class MainController {
         projectView.getCancelButton().addActionListener((event) -> {
             projectViewDialog.dispose();
         });
+    }
+
+    private void serializeTaskBoardModel() {
+        // save new project model into task board
+        try {
+            FileOutputStream fos = new FileOutputStream(TaskBoardModel.filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(taskBoardModel);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

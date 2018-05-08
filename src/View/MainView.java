@@ -140,7 +140,11 @@ public class MainView extends JPanel{
 		return logoutButton;
 	}
 
-	public void updateProjectsList(String project){
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public void updateProjectsList(String project){
 		projectComboBox.addItem(project);
 	}
 
