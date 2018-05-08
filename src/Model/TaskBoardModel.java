@@ -25,4 +25,8 @@ public class TaskBoardModel implements Serializable {
     public void addProject(ProjectModel project) {
         projects.add(project);
     }
+
+    public void deleteProject(ProjectModel project) {
+        projects.remove(project);
+    }
 }

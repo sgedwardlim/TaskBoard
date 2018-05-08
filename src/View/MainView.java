@@ -131,8 +131,20 @@ public class MainView extends JPanel{
 	public JButton getCreateButton() {
 		return createButton;
 	}
-	
-	public void updateProjectsList(String project){
+
+    public JButton getEditButton() {
+        return editButton;
+    }
+
+	public JButton getLogoutButton() {
+		return logoutButton;
+	}
+
+    public JButton getDeleteButton() {
+        return deleteButton;
+    }
+
+    public void updateProjectsList(String project){
 		projectComboBox.addItem(project);
 	}
 

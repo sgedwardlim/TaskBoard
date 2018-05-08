@@ -1,13 +1,12 @@
 package View;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 
 public class ProjectView extends JPanel {
     private JLabel nameLabel, columnLabel;
     private JTextField nameField;
-    private JButton addColumnButton, createButton, cancelButton;
+    private JButton addColumnButton, saveButton, cancelButton;
     private ArrayList<ColumnEditableView> columnEditableViews = new ArrayList();
 
     private final int columnEditableViewHeight = 40;
@@ -81,17 +80,17 @@ public class ProjectView extends JPanel {
     }
 
     private void configureCreateButtonLayout() {
-        createButton = new JButton("Create");
-        add(createButton);
-        layout.putConstraint(SpringLayout.NORTH, createButton, 0, SpringLayout.SOUTH, columnEditableViewPanel);
-        layout.putConstraint(SpringLayout.WEST, createButton, 0, SpringLayout.EAST, columnEditableViewPanel);
+        saveButton = new JButton("Save");
+        add(saveButton);
+        layout.putConstraint(SpringLayout.NORTH, saveButton, 0, SpringLayout.SOUTH, columnEditableViewPanel);
+        layout.putConstraint(SpringLayout.WEST, saveButton, 0, SpringLayout.EAST, columnEditableViewPanel);
     }
 
     private void configureCancelButtonLayout() {
         cancelButton = new JButton("Cancel");
         add(cancelButton);
         layout.putConstraint(SpringLayout.NORTH, cancelButton, 0, SpringLayout.SOUTH, columnEditableViewPanel);
-        layout.putConstraint(SpringLayout.WEST, cancelButton, 0, SpringLayout.EAST, createButton);
+        layout.putConstraint(SpringLayout.WEST, cancelButton, 0, SpringLayout.EAST, saveButton);
         layout.putConstraint(SpringLayout.EAST, cancelButton, 0, SpringLayout.EAST, this);
     }
 
@@ -143,8 +142,8 @@ public class ProjectView extends JPanel {
         return columns;
     }
 
-    public JButton getCreateButton() {
-        return createButton;
+    public JButton getSaveButton() {
+        return saveButton;
     }
 
     public JButton getCancelButton() {
