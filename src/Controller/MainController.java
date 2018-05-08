@@ -22,22 +22,7 @@ public class MainController {
         frame.add(mainView);
         frame.pack();
 
-        // Deserialization of TaskBoardModel
-        try {
-            FileInputStream file = new FileInputStream(TaskBoardModel.filename);
-            ObjectInputStream in = new ObjectInputStream(file);
-            taskBoardModel = (TaskBoardModel) in.readObject();
-            in.close();
-            file.close();
-        } catch(IOException ex) {
-            System.out.println("IOException is caught");
-            // create a new task model
-            taskBoardModel = new TaskBoardModel();
-        } catch(ClassNotFoundException ex) {
-            System.out.println("ClassNotFoundException is caught");
-            // create a new task model
-            taskBoardModel = new TaskBoardModel();
-        }
+        deserializeTaskBoardModel();
 
         // Load from taskboardmodel
         for (ProjectModel projectModel: taskBoardModel.getProjects()) {
@@ -120,6 +105,25 @@ public class MainController {
         projectView.getCancelButton().addActionListener((event) -> {
             projectViewDialog.dispose();
         });
+    }
+
+    private void deserializeTaskBoardModel() {
+        // Deserialization of TaskBoardModel
+        try {
+            FileInputStream file = new FileInputStream(TaskBoardModel.filename);
+            ObjectInputStream in = new ObjectInputStream(file);
+            taskBoardModel = (TaskBoardModel) in.readObject();
+            in.close();
+            file.close();
+        } catch(IOException ex) {
+            System.out.println("IOException is caught");
+            // create a new task model
+            taskBoardModel = new TaskBoardModel();
+        } catch(ClassNotFoundException ex) {
+            System.out.println("ClassNotFoundException is caught");
+            // create a new task model
+            taskBoardModel = new TaskBoardModel();
+        }
     }
 
     private void serializeTaskBoardModel() {
