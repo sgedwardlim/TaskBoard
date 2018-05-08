@@ -20,7 +20,6 @@ public class TaskCellView extends JPanel {
         //configureUsernameFieldLayout();
         configureDueLiteralLabelLayout();
         configureDueDateLabelLayout();
-      
     }
 
     @Override

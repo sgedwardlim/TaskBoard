@@ -1,9 +1,6 @@
 package Controller;
 
-import View.ManageTaskView;
 import View.LoginView;
-import View.MainView;
-import View.ProjectView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -6,10 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Properties;
 
 import javax.swing.*;
-import javax.swing.event.*;
-
-import org.jdatepicker.DateModel;
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -19,9 +15,8 @@ import java.util.Date;
 import java.util.List;
 
 import Model.Column;
-import Model.ProjectModel;
 
-public class ManageTaskView extends JPanel{
+public class TaskView extends JPanel {
 	
 	private JLabel nameLabel, descLabel, statusLabel, duedateLabel;
 	private JComboBox statusList;
@@ -32,8 +27,11 @@ public class ManageTaskView extends JPanel{
 	private JDatePickerImpl datePicker;
 	
 	private SpringLayout createTaskLayout;
-	
-	public ManageTaskView(ArrayList<Column> columns){
+
+	private ArrayList<Column> columns;
+
+	public TaskView(ArrayList<Column> columns){
+	    this.columns = columns;
 		configureLayout();
 		configureNameLabelLayout();
 		configureNameField();
@@ -182,25 +180,29 @@ public class ManageTaskView extends JPanel{
 		return statusList;
 	}
 	
-	public Date getDueDate() throws ParseException{
+	public Date getDueDate() throws ParseException {
 		String sDate =  datePicker.getJFormattedTextField().getText();
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
 		return date;
 	}
 	
-	public void updateStatusList(List<Column> columnList){
+	public void updateStatusList(List<Column> columns){
 		statusList.removeAllItems();
-		for (Column column : columnList){
+		for (Column column : columns){
 			statusList.addItem(column.getName());
 		}
 	}
 	
-	public void setSelectedItem(String name){
-		statusList.setSelectedItem(name);
+	public void setSelectedItem(Column column) {
+		statusList.setSelectedItem(column.getName());
 	}
-	
-	public Object getSelectedItem(){
-		return statusList.getSelectedItem();
-	}
-	
+
+    public Column getSelectedColumn(){
+        for (Column column: columns) {
+            if (column.getName().equals(statusList.getSelectedItem().toString())) {
+                return column;
+            }
+        }
+        return new Column(statusList.getSelectedItem().toString());
+    }
 }

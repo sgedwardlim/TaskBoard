@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Column implements Serializable {
     private String name;
 
-    Column(String name) {
+    public Column(String name) {
         this.name = name;
     }
 

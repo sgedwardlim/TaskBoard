@@ -18,9 +18,7 @@ public class TaskModel implements Serializable {
     private String name = "Task1";
     private String description;
     private Date dueDate;
-    private ArrayList<String> status = new ArrayList();
-    
-    private String currentStatus;
+    private Column status;
 
     public String getName() {
         return name;
@@ -46,15 +44,11 @@ public class TaskModel implements Serializable {
         this.dueDate = dueDate;
     }
 
-    public ArrayList<String> getStatus() {
+    public Column getStatus() {
         return status;
     }
 
-    public void setStatus(ArrayList<String> status) {
+    public void setStatus(Column status) {
         this.status = status;
-    }
-    
-    public void setCurrentStatus(String status){
-    	this.currentStatus = status;
     }
 }

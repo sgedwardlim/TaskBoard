@@ -1,12 +1,17 @@
 package Controller;
 
+import Model.Column;
 import Model.ProjectModel;
 import Model.TaskBoardModel;
+import Model.TaskModel;
+import View.ColumnCellView;
 import View.MainView;
 import View.ProjectView;
+import View.TaskView;
 
 import javax.swing.*;
 import java.io.*;
+import java.text.ParseException;
 
 public class MainController {
     private JFrame frame;
@@ -16,7 +21,6 @@ public class MainController {
 
     public MainController(JFrame frame) {
         this.frame = frame;
-
         frame.setLocationRelativeTo(null);
         mainView = new MainView();
         frame.add(mainView);
@@ -24,15 +28,10 @@ public class MainController {
 
         deserializeTaskBoardModel();
 
-        // Load from taskboardmodel
-        for (ProjectModel projectModel: taskBoardModel.getProjects()) {
-            mainView.updateProjectsList(projectModel.getName());
-        }
-        // always show the first
-        if (taskBoardModel.getProjects().size() != 0) {
-            mainView.addColumns(taskBoardModel.getProjects().get(0).getColumns());
-        }
+        setupMainView();
+    }
 
+    private void setupMainViewListeners() {
         // setup listeners
         mainView.getEditButton().addActionListener((e) -> {
             // figure out the selected project and edit
@@ -63,6 +62,70 @@ public class MainController {
         });
     }
 
+    private void setupColumnCellViewsForCurrentProject(ProjectModel projectModel) {
+        mainView.updateColumns(projectModel.getColumns());  // create the columns
+
+        System.out.printf("Setting up columns: %s\n", projectModel.getColumns());
+        for (int i = 0; i < projectModel.getColumns().size(); i++) {
+            Column column = projectModel.getColumns().get(i);
+            ColumnCellView columnCellView = mainView.getColumnCellViews().get(i);
+            columnCellView.setTaskModelList(projectModel.getTasksFor(column));
+
+            System.out.printf("Fetching tasks for %s: %s\n", column.getName(), projectModel.getTasksFor(column));
+            
+            // setup listeners
+            columnCellView.getCreateTaskButton().addActionListener((e) -> {
+                System.out.printf("Create task button selected from column: %s\n", column.getName());
+                TaskView taskView = new TaskView(projectModel.getColumns());
+                taskView.setSelectedItem(columnCellView.getColumn());
+
+                JDialog taskViewDialog = new JDialog();
+                taskViewDialog.setLocationRelativeTo(null);
+                taskViewDialog.setSize(450, 600);
+                taskViewDialog.add(taskView);
+                taskViewDialog.setVisible(true);
+
+                // setup listeners for creating a new task
+                taskView.getCreateButton().addActionListener((l) -> {
+                    TaskModel taskModel = new TaskModel();
+                    taskModel.setName(taskView.getNameField().getText());
+                    taskModel.setDescription(taskView.getDescArea().getText());
+                    taskModel.setStatus(taskView.getSelectedColumn());
+                    try {
+                        taskModel.setDueDate(taskView.getDueDate());
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    projectModel.addTaskFor(taskView.getSelectedColumn(), taskModel);
+                    columnCellView.setTaskModelList(projectModel.getTasksFor(taskView.getSelectedColumn()));
+
+                    serializeTaskBoardModel();
+
+                    taskViewDialog.dispose();
+                });
+
+                taskView.getCancelButton().addActionListener((l) -> {
+                    taskViewDialog.dispose();
+                });
+            });
+        }
+    }
+
+    private void setupMainView() {
+        // Fetch all projects for task board
+        for (ProjectModel projectModel: taskBoardModel.getProjects()) {
+            mainView.updateProjectsList(projectModel.getName());
+        }
+        // always show the first project for the board if exists
+        if (!taskBoardModel.getProjects().isEmpty()) {
+            ProjectModel projectModel = taskBoardModel.getProjects().get(0);
+            mainView.updateColumns(projectModel.getColumns());
+            setupColumnCellViewsForCurrentProject(projectModel);
+        }
+
+        setupMainViewListeners();
+    }
+
     private void setupProjectView(ProjectModel model) {
         boolean editable = model != null;
 
@@ -78,7 +141,7 @@ public class MainController {
         // read from our model to populate the view with the right values, if model is null, then create new model
         ProjectModel projectModel =  editable ? model : new ProjectModel();
         projectView.getNameField().setText(projectModel.getName());
-        projectModel.addColumn("TODO");
+        projectModel.addColumn(new Column("TODO"));
         String[] columns = new String[projectModel.getColumns().size()];
         for (int i = 0; i < projectModel.getColumns().size(); i++) {
             columns[i] = projectModel.getColumns().get(i).getName();
@@ -88,17 +151,17 @@ public class MainController {
         // setup button listeners
         projectView.getSaveButton().addActionListener((event) -> {
             projectModel.setName(projectView.getNameField().getText());
+            projectModel.getColumns().removeAll(projectModel.getColumns());
             for (String column: projectView.getColumns()) {
-                projectModel.addColumn(column);
+                projectModel.addColumn(new Column(column));
             }
             if (!editable) {
+                // user is creating a new project
+                System.out.printf("User is creating a project");
                 taskBoardModel.addProject(projectModel);
             }
-
             serializeTaskBoardModel();
 
-            mainView.updateProjectsList(projectView.getNameField().getText());
-            mainView.addColumns(projectModel.getColumns());
             projectViewDialog.dispose();
         });
 

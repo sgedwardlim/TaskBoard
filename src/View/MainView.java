@@ -2,27 +2,25 @@ package View;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.*;
-import javax.swing.event.*;
 
 import Model.Column;
-import Model.ProjectModel;
+import Model.TaskModel;
 
 public class MainView extends JPanel{
 
 	private JLabel selectLabel;
 	private JComboBox projectComboBox;
-	private JButton editButton, saveButton, deleteButton, loadButton,
-		createButton, logoutButton;
+	private JButton editButton, saveButton, deleteButton, loadButton, createButton, logoutButton;
 	
     private SpringLayout mainLayout;
     
     private JPanel columnsPanel;
+
+    private ArrayList<ColumnCellView> columnCellViews = new ArrayList<>();
     
 	public MainView(){
-		
 		configureLayout();
 		configureSelectLabelLayout();
 		configureProjectListLayout();
@@ -152,11 +150,26 @@ public class MainView extends JPanel{
 		return projectComboBox;
 	}
 
-	public void addColumns(ArrayList<Column> columns){
-		
-		for(int i = 0; i < columns.size(); i++){
-			ColumnCellView cell = new ColumnCellView(columns.get(i).getName(), columns);
-			columnsPanel.add(cell);
-		}
-	}
+    public ArrayList<ColumnCellView> getColumnCellViews() {
+        return columnCellViews;
+    }
+
+    public void updateColumns(ArrayList<Column> columns){
+        columnsPanel.removeAll();
+        for(int i = 0; i < columns.size(); i++){
+            ColumnCellView cell = new ColumnCellView(columns.get(i), columns);
+            columnCellViews.add(cell);
+            columnsPanel.add(cell);
+        }
+        columnsPanel.revalidate();
+        columnsPanel.repaint();
+    }
+
+//	public void updateTasksForColumnWith(String title, ArrayList<TaskModel> tasks) {
+//        for (ColumnCellView view: columnCellViews) {
+//            if (view.getColumn().equalsIgnoreCase(title)) {
+//                view.setTaskModelList(tasks);
+//            }
+//        }
+//    }
 }

@@ -6,21 +6,13 @@ import java.util.*;
 public class ProjectModel implements Serializable {
     private String name = "Project1";
     private ArrayList<Column> columns = new ArrayList<>();
-    private List<TaskModel> tasks = new LinkedList<>();
+    private HashMap<String, ArrayList<TaskModel>> tasks = new HashMap<>();
 
     /// Adds a new column to the existing list of columns while maintaining the list order
-   public void addColumn(String name) {
-       Column newColumn = new Column(name);
-       boolean containsDuplicate = false;
-       for (Column column: columns) {
-           if (column.equals(newColumn)) {
-               containsDuplicate = true;
-               break;
-           }
-       }
-
-       if (!containsDuplicate) {
-           columns.add(newColumn);
+   public void addColumn(Column column) {
+       if (!isDuplicate(column)) {
+           columns.add(column);
+           tasks.put(column.getName(), new ArrayList<>());
        }
    }
 
@@ -36,11 +28,28 @@ public class ProjectModel implements Serializable {
         return columns;
     }
 
-    public List<TaskModel> getTasks() {
-        return tasks;
+    public ArrayList<TaskModel> getTasksFor(Column column) {
+       return tasks.get(column.getName());
     }
 
-    public void setTasks(List<TaskModel> tasks) {
-        this.tasks = tasks;
+    public void addTaskFor(Column column, TaskModel task) {
+       // only add task if column already exists in columns
+        if (isDuplicate(column)) {
+            ArrayList<TaskModel> taskModels = tasks.get(column.getName());
+            taskModels.add(task);
+            tasks.put(column.getName(), taskModels);
+            System.out.printf("Added new task for %s\n", column.getName());
+        }
+    }
+
+    private boolean isDuplicate(Column column) {
+        boolean containsDuplicate = false;
+        for (Column elem: columns) {
+            if (column.equals(elem)) {
+                containsDuplicate = true;
+                break;
+            }
+        }
+        return containsDuplicate;
     }
 }
