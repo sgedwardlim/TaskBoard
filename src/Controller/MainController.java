@@ -33,6 +33,12 @@ public class MainController {
 
     private void setupMainViewListeners() {
         // setup listeners
+        mainView.getProjectComboBox().addActionListener((e) -> {
+            int index = mainView.getProjectComboBox().getSelectedIndex();
+            ProjectModel model = taskBoardModel.getProjects().get(index);
+            setupColumnCellViewsForCurrentProject(model);
+        });
+
         mainView.getEditButton().addActionListener((e) -> {
             // figure out the selected project and edit
             int index = mainView.getProjectComboBox().getSelectedIndex();
@@ -63,16 +69,16 @@ public class MainController {
     }
 
     private void setupColumnCellViewsForCurrentProject(ProjectModel projectModel) {
-        mainView.updateColumns(projectModel.getColumns());  // create the columns
+        mainView.initializeColumns(projectModel.getColumns());  // create the columns
 
         System.out.printf("Setting up columns: %s\n", projectModel.getColumns());
         for (int i = 0; i < projectModel.getColumns().size(); i++) {
             Column column = projectModel.getColumns().get(i);
+            mainView.updateTasksFor(column, projectModel.getTasksFor(column));
             ColumnCellView columnCellView = mainView.getColumnCellViews().get(i);
-            columnCellView.setTaskModelList(projectModel.getTasksFor(column));
 
             System.out.printf("Fetching tasks for %s: %s\n", column.getName(), projectModel.getTasksFor(column));
-            
+
             // setup listeners
             columnCellView.getCreateTaskButton().addActionListener((e) -> {
                 System.out.printf("Create task button selected from column: %s\n", column.getName());
@@ -119,7 +125,6 @@ public class MainController {
         // always show the first project for the board if exists
         if (!taskBoardModel.getProjects().isEmpty()) {
             ProjectModel projectModel = taskBoardModel.getProjects().get(0);
-            mainView.updateColumns(projectModel.getColumns());
             setupColumnCellViewsForCurrentProject(projectModel);
         }
 
@@ -159,6 +164,8 @@ public class MainController {
                 // user is creating a new project
                 System.out.printf("User is creating a project");
                 taskBoardModel.addProject(projectModel);
+                mainView.updateProjectsList(projectModel.getName());
+                setupColumnCellViewsForCurrentProject(projectModel);
             }
             serializeTaskBoardModel();
 

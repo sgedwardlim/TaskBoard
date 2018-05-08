@@ -154,8 +154,9 @@ public class MainView extends JPanel{
         return columnCellViews;
     }
 
-    public void updateColumns(ArrayList<Column> columns){
-        columnsPanel.removeAll();
+    public void initializeColumns(ArrayList<Column> columns) {
+		columnsPanel.removeAll();	// this will remove any existing listeners on buttons
+		columnCellViews.removeAll(columnCellViews);
         for(int i = 0; i < columns.size(); i++){
             ColumnCellView cell = new ColumnCellView(columns.get(i), columns);
             columnCellViews.add(cell);
@@ -165,11 +166,14 @@ public class MainView extends JPanel{
         columnsPanel.repaint();
     }
 
-//	public void updateTasksForColumnWith(String title, ArrayList<TaskModel> tasks) {
-//        for (ColumnCellView view: columnCellViews) {
-//            if (view.getColumn().equalsIgnoreCase(title)) {
-//                view.setTaskModelList(tasks);
-//            }
-//        }
-//    }
+	public void updateTasksFor(Column column, ArrayList<TaskModel> tasks) {
+        for (ColumnCellView view: columnCellViews) {
+            if (view.getColumn().equals(column)) {
+                view.setTaskModelList(tasks);
+                break;
+            }
+        }
+		columnsPanel.revalidate();
+		columnsPanel.repaint();
+    }
 }

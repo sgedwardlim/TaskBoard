@@ -83,7 +83,6 @@ public class ColumnCellView extends JPanel{
 			taskCellView.setDueDateLabel(taskModel.getDueDate().toGMTString().substring(0, 11));
 			taskCellPanel.add(taskCellView);
 			taskCellPanel.add(Box.createRigidArea(new Dimension(0,15)));
-			System.out.printf("Updating task cell views...\n");
 		}
 		revalidate();
 		repaint();
@@ -91,8 +90,6 @@ public class ColumnCellView extends JPanel{
 
     public void setTaskModelList(ArrayList<TaskModel> taskModelList) {
         this.taskModelList = taskModelList;
-        System.out.printf("Setting task cell views...\n");
         updateTaskViewCells();
-        System.out.printf("Updated task cell views...\n");
     }
 }
