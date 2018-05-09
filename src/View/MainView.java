@@ -13,7 +13,7 @@ import Model.TaskModel;
 
 public class MainView extends JPanel{
 
-	private JLabel selectLabel;
+	private JLabel selectLabel, serFileLocationLabel;
 	private JComboBox projectComboBox;
 	private JButton editButton, saveButton, deleteButton, loadButton, createButton, logoutButton;
 	
@@ -35,6 +35,7 @@ public class MainView extends JPanel{
 		configureLogoutButtonLayout();
 		configureCreateButtonLayout();
 		configureLoadButtonLayout();
+		configureSerFileLocationLabelLayout();
 		configureColumnsPanelLayout();
 	}
 	
@@ -51,7 +52,6 @@ public class MainView extends JPanel{
 	     mainLayout.putConstraint(SpringLayout.NORTH, selectLabel, 20, SpringLayout.NORTH,  this);
 	     add(selectLabel);
 	 }
-	
 	 
 	 private void configureProjectListLayout(){
 		 //test combo box list
@@ -110,8 +110,15 @@ public class MainView extends JPanel{
 	     mainLayout.putConstraint(SpringLayout.NORTH, logoutButton, 18, SpringLayout.NORTH,  this);
 		 add(logoutButton);
 	 }
-	 
-	 
+
+	private void configureSerFileLocationLabelLayout() {
+		serFileLocationLabel = new JLabel();
+		serFileLocationLabel.setFont(new Font("Calibri", Font.PLAIN, 12));
+		mainLayout.putConstraint(SpringLayout.EAST, serFileLocationLabel, -20, SpringLayout.EAST, this);
+		mainLayout.putConstraint(SpringLayout.SOUTH, serFileLocationLabel, -10, SpringLayout.SOUTH, this);
+		add(serFileLocationLabel);
+	}
+
 	 private void configureColumnsPanelLayout(){
 		 
 		 columnsPanel = new JPanel();
@@ -122,7 +129,7 @@ public class MainView extends JPanel{
 	     mainLayout.putConstraint(SpringLayout.NORTH, columnsPanel, 10, SpringLayout.SOUTH, editButton);
 	     mainLayout.putConstraint(SpringLayout.WEST, columnsPanel, 20, SpringLayout.WEST, this);
 	     mainLayout.putConstraint(SpringLayout.EAST, columnsPanel, -20, SpringLayout.EAST, this);
-	     mainLayout.putConstraint(SpringLayout.SOUTH, columnsPanel, -10, SpringLayout.SOUTH, this);
+	     mainLayout.putConstraint(SpringLayout.SOUTH, columnsPanel, -10, SpringLayout.NORTH, serFileLocationLabel);
 
 	     add(columnsPanel);
 	 }
@@ -157,13 +164,17 @@ public class MainView extends JPanel{
 		return projectComboBox;
 	}
 
-    public ArrayList<ColumnCellView> getColumnCellViews() {
+	public JLabel getSerFileLocationLabel() {
+		return serFileLocationLabel;
+	}
+
+	public ArrayList<ColumnCellView> getColumnCellViews() {
         return columnCellViews;
     }
 
     public void initializeColumns(ArrayList<Column> columns) {
-		columnsPanel.removeAll();	// this will remove any existing listeners on buttons
-		columnCellViews.removeAll(columnCellViews);
+		columnsPanel.removeAll();
+		columnCellViews.removeAll(columnCellViews);	// this will remove any existing listeners on buttons
         for(int i = 0; i < columns.size(); i++){
             ColumnCellView cell = new ColumnCellView(columns.get(i), columns);
             columnCellViews.add(cell);

@@ -1,5 +1,5 @@
 
-/*
+	/*
  * This class is used for the background image of the column panel
  */
 
