@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TaskModel implements Serializable {
+public class TaskModel implements Serializable, Comparable<TaskModel> {
     private String name = "Task1";
     private String description;
     private Date dueDate;
@@ -62,4 +62,15 @@ public class TaskModel implements Serializable {
     public Color getBackgroundColor(){
     	return this.backgroundColor;
     }
+   
+    @Override
+	public int compareTo(TaskModel task) {
+		if(dueDate.compareTo(task.getDueDate()) > 0){
+			return 1; 
+		}else if (dueDate.compareTo(task.getDueDate()) == 0){
+			return 0;
+		}else{
+			return -1;
+		}
+	}
 }

@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -77,6 +79,7 @@ public class ColumnCellView extends JPanel{
 
     private void updateTaskViewCells() {
 		taskCellPanel.removeAll();
+		Collections.sort(taskModelList);
 		for (TaskModel taskModel : taskModelList){
 			TaskCellView taskCellView = new TaskCellView();
 			taskCellView.setTitleLabel(taskModel.getName());
