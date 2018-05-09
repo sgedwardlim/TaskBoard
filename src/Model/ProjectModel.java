@@ -42,6 +42,13 @@ public class ProjectModel implements Serializable {
         }
     }
 
+    public void updateTasksFor(Column column, ArrayList<TaskModel> tasks) {
+        // only add task if column already exists in columns
+        if (isDuplicate(column)) {
+            this.tasks.put(column.getName(), tasks);
+        }
+    }
+
     private boolean isDuplicate(Column column) {
         boolean containsDuplicate = false;
         for (Column elem: columns) {

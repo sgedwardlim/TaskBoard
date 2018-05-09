@@ -12,6 +12,7 @@ import View.TaskView;
 import javax.swing.*;
 import java.io.*;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 public class MainController {
     private JFrame frame;
@@ -65,7 +66,7 @@ public class MainController {
         });
 
         mainView.getDeleteButton().addActionListener((e) -> {
-            // delete the current existing project,
+            // delete the current existing project
             int index = mainView.getProjectComboBox().getSelectedIndex();
             if (index != -1) {
                 ProjectModel model = taskBoardModel.getProjects().get(index);
@@ -110,17 +111,42 @@ public class MainController {
 
         // setup button listeners
         projectView.getSaveButton().addActionListener((event) -> {
+            // Fetch everything from the view since it will provide us with the latest values
             projectModel.setName(projectView.getNameField().getText());
             projectModel.getColumns().removeAll(projectModel.getColumns());
-            for (String column: projectView.getColumns()) {
-                projectModel.addColumn(new Column(column));
+
+            // save existing copies of tasksModels for project model along with new columns created with index preserved
+            ArrayList<ArrayList<TaskModel>> taskModels = new ArrayList<>();
+            for (String columnName: projectView.getColumns()) {
+                Column column = new Column(columnName);
+                if (projectModel.getTasksFor(column) == null) {
+                    taskModels.add(new ArrayList<>());
+                } else {
+                    taskModels.add(projectModel.getTasksFor(column));
+                }
             }
+
+            // clear out the all columns in existing project since we now have copy
+            projectModel.getColumns().removeAll(projectModel.getColumns());
+            for (int i = 0; i < taskModels.size(); i++) {
+                Column column = new Column(projectView.getColumns()[i]);
+                projectModel.addColumn(column);
+                projectModel.updateTasksFor(column, taskModels.get(i));
+            }
+
             if (!editable) {
                 // user is creating a new project
-                System.out.printf("User is creating a project");
+                System.out.printf("User is creating a project\n");
                 taskBoardModel.addProject(projectModel);
                 mainView.updateProjectsList(projectModel.getName());
+                mainView.getProjectComboBox().setSelectedIndex(taskBoardModel.getProjects().size() - 1);
+            } else {
+                int selectedIndex = mainView.getProjectComboBox().getSelectedIndex();
+                mainView.getProjectComboBox().removeItemAt(selectedIndex);
+                mainView.getProjectComboBox().insertItemAt(projectModel.getName(), selectedIndex);
+                mainView.getProjectComboBox().setSelectedIndex(selectedIndex);
             }
+
             setupColumnCellViewsForCurrentProject(projectModel);
 
             serializeTaskBoardModel();
