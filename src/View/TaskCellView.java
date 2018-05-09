@@ -8,12 +8,13 @@ import java.awt.*;
 public class TaskCellView extends JPanel {
     private JLabel titleLabel, descriptionLabel, dueLiteralLabel, dueDateLabel;
     private BoxLayout layout;
+ 
 
     public TaskCellView() {
     	
-    	this.setPreferredSize(new Dimension(150,85));
+    	this.setPreferredSize(new Dimension(175,100));
     	this.setBackground(Color.WHITE);
-    	
+    	this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         configureLayout();
         configureTitleLabelLayout();
         configureDescriptionLabelLayout();  
@@ -33,8 +34,9 @@ public class TaskCellView extends JPanel {
     }
 
     private void configureTitleLabelLayout() {
+    	add(Box.createRigidArea(new Dimension(0,3)));
         titleLabel = new JLabel();
-        titleLabel.setFont(new Font("Calibri", Font.BOLD, 22));
+        titleLabel.setFont(new Font("Calibri", Font.BOLD, 20));
         //layout.putConstraint(SpringLayout.WEST, titleLabel, 0, SpringLayout.WEST, this);
         add(titleLabel);
         add(Box.createHorizontalGlue());
@@ -68,6 +70,7 @@ public class TaskCellView extends JPanel {
         //layout.putConstraint(SpringLayout.NORTH, dueDateLabel, 0, SpringLayout.SOUTH, dueLiteralLabel);
         //layout.putConstraint(SpringLayout.WEST, dueDateLabel, 0, SpringLayout.WEST, this);
         add(dueDateLabel);
+        add(Box.createRigidArea(new Dimension(0,3)));
     }
 
     public JLabel getTitleLabel() {

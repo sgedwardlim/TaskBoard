@@ -1,8 +1,11 @@
 package View;
 
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import Model.Column;
@@ -21,6 +24,8 @@ public class MainView extends JPanel{
     private ArrayList<ColumnCellView> columnCellViews = new ArrayList<>();
     
 	public MainView(){
+		this.setBackground(new Color(249, 249, 249));
+		
 		configureLayout();
 		configureSelectLabelLayout();
 		configureProjectListLayout();
@@ -106,11 +111,13 @@ public class MainView extends JPanel{
 		 add(logoutButton);
 	 }
 	 
+	 
 	 private void configureColumnsPanelLayout(){
+		 
 		 columnsPanel = new JPanel();
-		 columnsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		 columnsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		 columnsPanel.setOpaque(true);
-		 columnsPanel.setBackground(Color.lightGray);
+		 columnsPanel.setBackground(new Color(226, 226, 226));
 		  
 	     mainLayout.putConstraint(SpringLayout.NORTH, columnsPanel, 10, SpringLayout.SOUTH, editButton);
 	     mainLayout.putConstraint(SpringLayout.WEST, columnsPanel, 20, SpringLayout.WEST, this);

@@ -13,7 +13,7 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         new LoginController(frame);
         // set the jframe size and location, and make it visible
-        frame.setPreferredSize(new Dimension(1200, 600));
+        frame.setPreferredSize(new Dimension(1200, 800));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -1,5 +1,7 @@
 package Model;
 
+import java.awt.Color;
+
 //Name: String, â€œTask1â€� by default
 //Description: String, empty by default
 //Due Date: Date/String, empty by default
@@ -19,6 +21,7 @@ public class TaskModel implements Serializable {
     private String description;
     private Date dueDate;
     private Column status;
+    private Color backgroundColor;
 
     public String getName() {
         return name;
@@ -50,5 +53,13 @@ public class TaskModel implements Serializable {
 
     public void setStatus(Column status) {
         this.status = status;
+    }
+    
+    public void setBackgroundColor(Color color){
+    	this.backgroundColor = color;
+    }
+    
+    public Color getBackgroundColor(){
+    	return this.backgroundColor;
     }
 }

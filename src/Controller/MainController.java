@@ -102,6 +102,7 @@ public class MainController {
                     } catch (ParseException e1) {
                         e1.printStackTrace();
                     }
+                    taskModel.setBackgroundColor(taskView.getBackgroundColor());
                     projectModel.addTaskFor(taskView.getSelectedColumn(), taskModel);
                     columnCellView.setTaskModelList(projectModel.getTasksFor(taskView.getSelectedColumn()));
 
@@ -165,8 +166,9 @@ public class MainController {
                 System.out.printf("User is creating a project");
                 taskBoardModel.addProject(projectModel);
                 mainView.updateProjectsList(projectModel.getName());
-                setupColumnCellViewsForCurrentProject(projectModel);
             }
+            setupColumnCellViewsForCurrentProject(projectModel);
+
             serializeTaskBoardModel();
 
             projectViewDialog.dispose();
