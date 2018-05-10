@@ -29,7 +29,9 @@ public class ProjectModel implements Serializable {
     }
 
     public ArrayList<TaskModel> getTasksFor(Column column) {
-    	Collections.sort(tasks.get(column.getName()));
+    	if (tasks.get(column.getName()) != null){
+    		Collections.sort(tasks.get(column.getName()));
+    	}
     	return tasks.get(column.getName());
     }
 
