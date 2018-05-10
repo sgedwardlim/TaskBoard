@@ -21,7 +21,7 @@ public class TaskView extends JPanel {
 	private JLabel nameLabel, descLabel, statusLabel, duedateLabel;
 	private JComboBox statusList;
 	private JButton createButton, cancelButton, colorButton;
-	private JTextField nameField, duedateField;
+	private JTextField nameField;
 	private JTextArea descArea;
 	private JPanel colorPanel;
 	private JDatePickerImpl datePicker;
@@ -44,11 +44,11 @@ public class TaskView extends JPanel {
 		configureStatusListLayout();
 		updateStatusList(columns);
 		configureDueDateLabelLayout();
-		configureDatePickerLayout();
-		configureColorButton();
+		configureDatePickerLayout(null);
 		configureColorPanel();
-		configureCreateButtonLayout();
+		configureColorButton();
 		configureCancelButtonLayout();
+		configureCreateButtonLayout();
 		
 		colorButton.addActionListener((l)->{
 			 backgroundColor=JColorChooser.showDialog(this,"Choose",Color.WHITE); 
@@ -110,10 +110,7 @@ public class TaskView extends JPanel {
 	}
 	
 	private void configureStatusListLayout(){
-		//tests combo box list
-		
 		statusList = new JComboBox();
-//		updateStatusList();
 		statusList.setFont(new Font("Calibri", Font.BOLD, 18));
 		createTaskLayout.putConstraint(SpringLayout.WEST, statusList, 20, SpringLayout.WEST, this);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, statusList, 3, SpringLayout.SOUTH,  statusLabel);
@@ -128,48 +125,48 @@ public class TaskView extends JPanel {
 	     createTaskLayout.putConstraint(SpringLayout.NORTH, duedateLabel, 8, SpringLayout.SOUTH,  statusList);
 	     add(duedateLabel);
 	 }
-	
-	
-	private void configureColorButton(){
-		colorButton = new JButton("Choose a Color");
-		colorButton.setFont(new Font("Calibri", Font.BOLD, 15));
-		createTaskLayout.putConstraint(SpringLayout.WEST, colorButton, 30, SpringLayout.EAST, datePicker);
-		createTaskLayout.putConstraint(SpringLayout.NORTH, colorButton, 35, SpringLayout.SOUTH, statusList);
-		add(colorButton);
-	}
-	
+
 	private void configureColorPanel(){
 		colorPanel = new JPanel();
 		colorPanel.setPreferredSize(new Dimension(30,30));
 		colorPanel.setBackground(backgroundColor);
-		createTaskLayout.putConstraint(SpringLayout.WEST, colorPanel, 5, SpringLayout.EAST, colorButton);
+		createTaskLayout.putConstraint(SpringLayout.EAST, colorPanel, -10, SpringLayout.EAST, this);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, colorPanel, 35 , SpringLayout.SOUTH, statusList);
 		add(colorPanel);
-		
+	}
+	
+	private void configureColorButton(){
+		colorButton = new JButton("Choose a Color");
+		colorButton.setFont(new Font("Calibri", Font.BOLD, 15));
+		createTaskLayout.putConstraint(SpringLayout.EAST, colorButton, -10, SpringLayout.WEST, colorPanel);
+		createTaskLayout.putConstraint(SpringLayout.VERTICAL_CENTER, colorButton, 0, SpringLayout.VERTICAL_CENTER, colorPanel);
+		add(colorButton);
 	}
 	
 	public void setColorPanel(Color color){
 		colorPanel.setBackground(color);
 	}
-	
-	private void configureCreateButtonLayout(){
-		createButton = new JButton("Create");
-		createButton.setFont(new Font("Calibri", Font.BOLD, 18));
-		createTaskLayout.putConstraint(SpringLayout.WEST, createButton, 20, SpringLayout.WEST, this);
-		createTaskLayout.putConstraint(SpringLayout.NORTH, createButton, 10, SpringLayout.SOUTH,  datePicker);
-		add(createButton);
-	}
-	
+
 	private void configureCancelButtonLayout(){
 		cancelButton = new JButton("Cancel");
 		cancelButton.setFont(new Font("Calibri", Font.BOLD, 18));
-		createTaskLayout.putConstraint(SpringLayout.WEST, cancelButton, 5, SpringLayout.EAST, createButton);
-		createTaskLayout.putConstraint(SpringLayout.NORTH, cancelButton, 10, SpringLayout.SOUTH,  datePicker);
+		createTaskLayout.putConstraint(SpringLayout.EAST, cancelButton, 0, SpringLayout.EAST, colorPanel);
+		createTaskLayout.putConstraint(SpringLayout.NORTH, cancelButton, 10, SpringLayout.SOUTH,  colorPanel);
 		add(cancelButton);
 	}
+
+	private void configureCreateButtonLayout(){
+		createButton = new JButton("Create");
+		createButton.setFont(new Font("Calibri", Font.BOLD, 18));
+		createTaskLayout.putConstraint(SpringLayout.EAST, createButton, 10, SpringLayout.WEST, cancelButton);
+		createTaskLayout.putConstraint(SpringLayout.NORTH, createButton, 0, SpringLayout.NORTH,  cancelButton);
+		add(createButton);
+	}
 	
-	private void configureDatePickerLayout(){
+	private void configureDatePickerLayout(Date date){
 		UtilDateModel model = new UtilDateModel();
+		model.setValue(date == null ? new Date() : date);
+		model.setSelected(true);
 		Properties p = new Properties();
 		p.put("text.today", "Today");
 		p.put("text.month", "Month");
@@ -180,8 +177,6 @@ public class TaskView extends JPanel {
 		createTaskLayout.putConstraint(SpringLayout.WEST, datePicker, 20, SpringLayout.WEST, this);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, datePicker, 3, SpringLayout.SOUTH,  duedateLabel);
 		add(datePicker);
-		
-		
 	}
 	
 	public JButton getCreateButton(){
@@ -221,11 +216,17 @@ public class TaskView extends JPanel {
 	}
 	
 	public Date getDueDate() throws ParseException {
-		String sDate =  datePicker.getJFormattedTextField().getText();
+		String sDate = datePicker.getJFormattedTextField().getText();
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
 		return date;
 	}
-	
+
+	public void updateDateFieldWith(Date date) {
+		this.remove(datePicker);
+		configureDatePickerLayout(date);
+		revalidate();
+		repaint();
+	}
 
 	public void updateStatusList(List<Column> columns){
 		statusList.removeAllItems();
