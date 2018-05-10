@@ -192,7 +192,6 @@ public class MainController {
                          taskView.setColorPanel(taskCell.getBackground());
                          taskView.setSelectedItem(column);
                          taskView.updateDateFieldWith(taskModel.getDueDate());
-                         //set due date?
                          
                          taskView.getCreateButton().addActionListener((l) -> {
                         	 taskModel.setName(taskView.getNameField().getText());
