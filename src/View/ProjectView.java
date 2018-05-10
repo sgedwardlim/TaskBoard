@@ -78,7 +78,7 @@ public class ProjectView extends JPanel {
                 columns[lastSelectedIndex] = columns[lastSelectedIndex + 1];
                 columns[lastSelectedIndex + 1] = temp;
                 ++lastSelectedIndex;
-                updateColumns(columns);
+                updateColumns(columns); 
             }
 
         });

@@ -141,14 +141,14 @@ public class TaskView extends JPanel {
 	private void configureColorPanel(){
 		colorPanel = new JPanel();
 		colorPanel.setPreferredSize(new Dimension(30,30));
-		colorPanel.setBackground(Color.WHITE);
+		colorPanel.setBackground(backgroundColor);
 		createTaskLayout.putConstraint(SpringLayout.WEST, colorPanel, 5, SpringLayout.EAST, colorButton);
 		createTaskLayout.putConstraint(SpringLayout.NORTH, colorPanel, 35 , SpringLayout.SOUTH, statusList);
 		add(colorPanel);
 		
 	}
 	
-	private void setColorPanel(Color color){
+	public void setColorPanel(Color color){
 		colorPanel.setBackground(color);
 	}
 	
@@ -196,8 +196,16 @@ public class TaskView extends JPanel {
 		return nameField;
 	}
 	
+	public void setNameField(String name){
+		nameField.setText(name);
+	}
+	
 	public JTextArea getDescArea(){
 		return descArea;
+	}
+	
+	public void setDescArea(String desc){
+		descArea.setText(desc);
 	}
 	
 	public JComboBox getStatusList(){
@@ -208,12 +216,17 @@ public class TaskView extends JPanel {
 		return backgroundColor;
 	}
 	
+	public void setBackgroundColor(Color color){
+		backgroundColor = color;
+	}
+	
 	public Date getDueDate() throws ParseException {
 		String sDate =  datePicker.getJFormattedTextField().getText();
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
 		return date;
 	}
 	
+
 	public void updateStatusList(List<Column> columns){
 		statusList.removeAllItems();
 		for (Column column : columns){

@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -24,11 +25,14 @@ public class ColumnCellView extends JPanel{
     private BoxLayout layout;
 
 	private ArrayList<TaskModel> taskModelList = new ArrayList();
+	private ArrayList<TaskCellView> taskCellViews = new ArrayList();
 	
 	public ColumnCellView(Column column, ArrayList<Column> columns){
 		//provide a set width for column
 		this.column = column;
 		this.setBackground(new Color(249, 249, 249));
+		this.setBorder(BorderFactory.createLineBorder(new Color (227,227,227), 10));
+		this.setAlignmentY(Component.TOP_ALIGNMENT);
 		configureLayout();
 		configureTitleLabelLayout();
 		configureTaskCellPanelLayout();
@@ -76,10 +80,14 @@ public class ColumnCellView extends JPanel{
     public JButton getCreateTaskButton() {
         return createTaskButton;
     }
+    
+    public ArrayList<TaskCellView> getTaskCellViews(){
+    	return taskCellViews;
+    }
 
     private void updateTaskViewCells() {
 		taskCellPanel.removeAll();
-		Collections.sort(taskModelList);
+		//Collections.sort(taskModelList);
 		for (TaskModel taskModel : taskModelList){
 			TaskCellView taskCellView = new TaskCellView();
 			taskCellView.setTitleLabel(taskModel.getName());
@@ -87,15 +95,9 @@ public class ColumnCellView extends JPanel{
 			taskCellView.setDueDateLabel(taskModel.getDueDate().toGMTString().substring(0, 11));
 			taskCellView.setBackground(taskModel.getBackgroundColor());
 			taskCellPanel.add(taskCellView);
+			taskCellViews.add(taskCellView);
 			taskCellPanel.add(Box.createRigidArea(new Dimension(0,15)));
-			
-			/*
-			taskCellView.addMouseListener(new MouseAdapter(){
-				public void mousePressed(MouseEvent e){
-					System.out.println("Task Clicked");
-				}
-			});
-			*/
+
 			
 		}
 		revalidate();

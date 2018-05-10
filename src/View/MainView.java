@@ -30,11 +30,9 @@ public class MainView extends JPanel{
 		configureSelectLabelLayout();
 		configureProjectListLayout();
 		configureEditButtonLayout();
-		configureSaveButtonLayout();
 		configureDeleteButtonLayout();
 		configureLogoutButtonLayout();
 		configureCreateButtonLayout();
-		configureLoadButtonLayout();
 		configureSerFileLocationLabelLayout();
 		configureColumnsPanelLayout();
 	}
@@ -71,29 +69,15 @@ public class MainView extends JPanel{
 		 add(editButton);
 	 }
 	 
-	 private void configureSaveButtonLayout(){
-		 saveButton = new JButton("Save");
-		 configureButtonStyle(saveButton);
-		 mainLayout.putConstraint(SpringLayout.WEST, saveButton, 20, SpringLayout.EAST,  editButton);
-	     mainLayout.putConstraint(SpringLayout.NORTH, saveButton, 18, SpringLayout.NORTH,  this);
-		 add(saveButton);
-	 }
 	 
 	 private void configureDeleteButtonLayout(){
 		 deleteButton = new JButton("Delete");
 		 configureButtonStyle(deleteButton);
-		 mainLayout.putConstraint(SpringLayout.WEST, deleteButton, 20, SpringLayout.EAST,  saveButton);
+		 mainLayout.putConstraint(SpringLayout.WEST, deleteButton, 20, SpringLayout.EAST,  editButton);
 	     mainLayout.putConstraint(SpringLayout.NORTH, deleteButton, 18, SpringLayout.NORTH,  this);
 		 add(deleteButton);
 	 }
 	 
-	 private void configureLoadButtonLayout(){
-		 loadButton = new JButton("Load...");
-		 configureButtonStyle(loadButton);
-		 mainLayout.putConstraint(SpringLayout.EAST, loadButton, -20, SpringLayout.WEST,  createButton);
-	     mainLayout.putConstraint(SpringLayout.NORTH, loadButton, 18, SpringLayout.NORTH,  this);
-		 add(loadButton);
-	 }
 	 
 	 private void configureCreateButtonLayout(){
 		 createButton = new JButton("Create new");
@@ -122,7 +106,8 @@ public class MainView extends JPanel{
 	 private void configureColumnsPanelLayout(){
 		 
 		 columnsPanel = new JPanel();
-		 columnsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		 //columnsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		 columnsPanel.setLayout(new BoxLayout(columnsPanel, BoxLayout.X_AXIS));
 		 columnsPanel.setOpaque(true);
 		 columnsPanel.setBackground(new Color(226, 226, 226));
 		  
@@ -179,7 +164,10 @@ public class MainView extends JPanel{
             ColumnCellView cell = new ColumnCellView(columns.get(i), columns);
             columnCellViews.add(cell);
             columnsPanel.add(cell);
+            columnsPanel.add(Box.createRigidArea(new Dimension(5,0)));
         }
+        
+        columnsPanel.add(Box.createRigidArea(new Dimension(columnsPanel.getWidth() - columnsPanel.getComponentCount() * 100 ,0)));
         columnsPanel.revalidate();
         columnsPanel.repaint();
     }

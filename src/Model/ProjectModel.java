@@ -29,7 +29,8 @@ public class ProjectModel implements Serializable {
     }
 
     public ArrayList<TaskModel> getTasksFor(Column column) {
-       return tasks.get(column.getName());
+    	Collections.sort(tasks.get(column.getName()));
+    	return tasks.get(column.getName());
     }
 
     public void addTaskFor(Column column, TaskModel task) {
