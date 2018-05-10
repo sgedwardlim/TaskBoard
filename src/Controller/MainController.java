@@ -94,7 +94,7 @@ public class MainController {
         ProjectView projectView = new ProjectView();
         JDialog projectViewDialog = new JDialog();
         projectViewDialog.setLocationRelativeTo(null);
-        projectViewDialog.setSize(500, 600);
+        projectViewDialog.setSize(410, 600);
         projectViewDialog.setTitle("Create New Project");
         projectViewDialog.add(projectView);
         projectViewDialog.setVisible(true);

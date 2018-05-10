@@ -8,6 +8,7 @@ package View;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -21,12 +22,13 @@ public class BackgroundImagePanel extends JPanel{
 
 	    super.paintComponent(g);
 	    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream input = classLoader.getResourceAsStream("background.png");
+//		InputStream input = classLoader.getResourceAsStream("background.png");
 		Image image;
 		try {
-			image = ImageIO.read(input);
-			//image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
-			//g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);
+			image = ImageIO.read(new File("Assets/background.png"));
+//			image = ImageIO.read(input);
+			image.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
+//			g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);
 			g.drawImage(image, 0, 0, null);
 		} catch (IOException e) {
 		}
