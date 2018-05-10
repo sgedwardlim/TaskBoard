@@ -20,7 +20,7 @@ public class TaskView extends JPanel {
 	
 	private JLabel nameLabel, descLabel, statusLabel, duedateLabel;
 	private JComboBox statusList;
-	private JButton createButton, cancelButton, colorButton;
+	private JButton saveButton, cancelButton, colorButton;
 	private JTextField nameField;
 	private JTextArea descArea;
 	private JPanel colorPanel;
@@ -156,11 +156,11 @@ public class TaskView extends JPanel {
 	}
 
 	private void configureCreateButtonLayout(){
-		createButton = new JButton("Create");
-		createButton.setFont(new Font("Calibri", Font.BOLD, 18));
-		createTaskLayout.putConstraint(SpringLayout.EAST, createButton, 10, SpringLayout.WEST, cancelButton);
-		createTaskLayout.putConstraint(SpringLayout.NORTH, createButton, 0, SpringLayout.NORTH,  cancelButton);
-		add(createButton);
+		saveButton = new JButton("Save");
+		saveButton.setFont(new Font("Calibri", Font.BOLD, 18));
+		createTaskLayout.putConstraint(SpringLayout.EAST, saveButton, 10, SpringLayout.WEST, cancelButton);
+		createTaskLayout.putConstraint(SpringLayout.NORTH, saveButton, 0, SpringLayout.NORTH,  cancelButton);
+		add(saveButton);
 	}
 	
 	private void configureDatePickerLayout(Date date){
@@ -179,8 +179,8 @@ public class TaskView extends JPanel {
 		add(datePicker);
 	}
 	
-	public JButton getCreateButton(){
-		return createButton;
+	public JButton getSaveButton(){
+		return saveButton;
 	}
 	
 	public JButton getCancelButton(){

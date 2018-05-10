@@ -26,7 +26,7 @@ public class LoginController {
             if (e.getSource() == loginView.getLoginButton()) {
                 String username = loginView.getUsernameField().getText();
                 String password = loginView.getPasswordField().getText();
-                
+
                 if (username.equals("admin") && password.equals("admin")){
                     frame.remove(loginView);
                     new MainController(frame);

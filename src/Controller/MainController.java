@@ -193,7 +193,7 @@ public class MainController {
                          taskView.setSelectedItem(column);
                          taskView.updateDateFieldWith(taskModel.getDueDate());
                          
-                         taskView.getCreateButton().addActionListener((l) -> {
+                         taskView.getSaveButton().addActionListener((l) -> {
                         	 taskModel.setName(taskView.getNameField().getText());
                         	 taskModel.setDescription(taskView.getDescArea().getText());
                         	 taskModel.setStatus(taskView.getSelectedColumn());
@@ -237,7 +237,7 @@ public class MainController {
                 taskViewDialog.setVisible(true);
 
                 // setup listeners for creating a new task
-                taskView.getCreateButton().addActionListener((l) -> {
+                taskView.getSaveButton().addActionListener((l) -> {
                     TaskModel taskModel = new TaskModel();
                     taskModel.setName(taskView.getNameField().getText());
                     taskModel.setDescription(taskView.getDescArea().getText());
@@ -249,7 +249,7 @@ public class MainController {
                     }
                     taskModel.setBackgroundColor(taskView.getBackgroundColor());
                     projectModel.addTaskFor(taskView.getSelectedColumn(), taskModel);
-                    columnCellView.setTaskModelList(projectModel.getTasksFor(taskView.getSelectedColumn()));
+                    setupColumnCellViewsForCurrentProject(projectModel);
 
                     serializeTaskBoardModel();
 
