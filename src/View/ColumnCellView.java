@@ -86,6 +86,7 @@ public class ColumnCellView extends JPanel{
     }
 
     private void updateTaskViewCells() {
+		taskCellViews = new ArrayList();
 		taskCellPanel.removeAll();
 		//Collections.sort(taskModelList);
 		for (TaskModel taskModel : taskModelList){
@@ -97,8 +98,6 @@ public class ColumnCellView extends JPanel{
 			taskCellPanel.add(taskCellView);
 			taskCellViews.add(taskCellView);
 			taskCellPanel.add(Box.createRigidArea(new Dimension(0,15)));
-
-			
 		}
 		revalidate();
 		repaint();

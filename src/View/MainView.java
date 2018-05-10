@@ -15,7 +15,7 @@ public class MainView extends JPanel{
 
 	private JLabel selectLabel, serFileLocationLabel;
 	private JComboBox projectComboBox;
-	private JButton editButton, saveButton, deleteButton, loadButton, createButton, logoutButton;
+	private JButton editButton, deleteButton, createButton, logoutButton;
 	
     private SpringLayout mainLayout;
     

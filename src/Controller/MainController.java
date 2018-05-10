@@ -176,9 +176,9 @@ public class MainController {
             	TaskCellView taskCell = columnCellView.getTaskCellViews().get(j);
             	TaskModel taskModel = projectModel.getTasksFor(column).get(j);
             	taskCell.addMouseListener(new MouseAdapter(){
-            		public void mousePressed(MouseEvent e){
-            			TaskView taskView = new TaskView(projectModel.getColumns());
-            			 taskView.setSelectedItem(columnCellView.getColumn());
+            		public void mousePressed(MouseEvent e) {
+            		    TaskView taskView = new TaskView(projectModel.getColumns());
+            		    taskView.setSelectedItem(columnCellView.getColumn());
 
                          JDialog taskViewDialog = new JDialog();
                          taskViewDialog.setLocationRelativeTo(null);
@@ -194,7 +194,6 @@ public class MainController {
                          //set due date?
                          
                          taskView.getCreateButton().addActionListener((l) -> {
-           
                         	 taskModel.setName(taskView.getNameField().getText());
                         	 taskModel.setDescription(taskView.getDescArea().getText());
                         	 taskModel.setStatus(taskView.getSelectedColumn());
@@ -204,9 +203,12 @@ public class MainController {
                                  e1.printStackTrace();
                              }
                              taskModel.setBackgroundColor(taskView.getBackgroundColor());
-                             
-                             columnCellView.setTaskModelList(projectModel.getTasksFor(taskView.getSelectedColumn()));
-                             
+                        	 if (!column.equals(taskModel.getStatus())) {
+                        	     projectModel.getTasksFor(column).remove(taskModel);
+                        	     projectModel.getTasksFor(taskModel.getStatus()).add(taskModel);
+                             }
+
+                             setupColumnCellViewsForCurrentProject(projectModel);
 
                              serializeTaskBoardModel();
                              taskViewDialog.dispose();
@@ -248,7 +250,6 @@ public class MainController {
                     taskModel.setBackgroundColor(taskView.getBackgroundColor());
                     projectModel.addTaskFor(taskView.getSelectedColumn(), taskModel);
                     columnCellView.setTaskModelList(projectModel.getTasksFor(taskView.getSelectedColumn()));
-                    
 
                     serializeTaskBoardModel();
 
